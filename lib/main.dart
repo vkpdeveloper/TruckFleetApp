@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'about_us.dart';
+import 'edit_profile.dart';
 import 'models/load.dart';
 
 void main() async {
@@ -148,15 +149,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
-                height: 50,
-                alignment: Alignment.centerLeft,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(color: Colors.white),
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Profile',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditProfile(loggedIn: true))),
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(color: Colors.white),
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Profile',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                  ),
                 ),
               ),
               InkWell(

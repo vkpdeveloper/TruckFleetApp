@@ -3,9 +3,14 @@ import 'package:flutter_learning_app/controllers/http_controller.dart';
 import 'package:flutter_learning_app/main.dart';
 import 'package:provider/provider.dart';
 
+import 'models/user.dart';
 import 'providers/login.dart';
+import 'providers/user_provider.dart';
 
 class EditProfile extends StatefulWidget {
+  final bool loggedIn;
+
+  const EditProfile({Key key, this.loggedIn = false}) : super(key: key);
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -18,11 +23,21 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _phone = TextEditingController();
   TextEditingController _location = TextEditingController();
   bool _isLoading = false;
+  UserProvider _userProvider;
 
   @override
   void initState() {
     super.initState();
     _phone.text = Provider.of<LoginProvider>(context, listen: false).phone;
+    _userProvider = Provider.of<UserProvider>(context);
+    User user = _userProvider.user;
+    if (widget.loggedIn) {
+      _name.text = user.name;
+      _email.text = user.email;
+      _company.text = user.companyName;
+      _location.text = user.location;
+      _phone.text = user.mobile.toString();
+    }
   }
 
   @override
