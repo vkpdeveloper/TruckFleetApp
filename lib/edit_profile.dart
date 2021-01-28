@@ -174,14 +174,37 @@ class _EditProfileState extends State<EditProfile> {
                                 onPressed: () async {
                                   provider.setInfo(_email.text, _name.text,
                                       _company.text, _location.text);
-                                  bool isDone =
-                                      await HttpController.postProfile(
-                                          provider);
-                                  if (isDone) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomePage()));
+                                  if (widget.loggedIn) {
+                                    bool isDone =
+                                        await HttpController.editProfile(
+                                            provider);
+                                    if (isDone) {
+                                      Provider.of<UserProvider>(context,
+                                              listen: false)
+                                          .init();
+                                      Scaffold.of(context)
+                                          .showSnackBar(new SnackBar(
+                                        content: Text(
+                                            "Profile updated successfully"),
+                                      ));
+                                    } else {
+                                      Scaffold.of(context)
+                                          .showSnackBar(new SnackBar(
+                                        content:
+                                            Text("Failed to update profile"),
+                                      ));
+                                    }
+                                  } else {
+                                    bool isDone =
+                                        await HttpController.postProfile(
+                                            provider);
+                                    if (isDone) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage()));
+                                    }
                                   }
                                 },
                                 child: Text("Save Profile"),

@@ -147,4 +147,27 @@ class HttpController {
       return null;
     }
   }
+
+  static Future<bool> editProfile(LoginProvider provider) async {
+    var endPoint = "/edit_profile";
+    try {
+      Response res = await Dio().post("$_hostUrl$endPoint", data: {
+        "name": provider.name,
+        "email": provider.email,
+        "company_name": provider.companyName,
+        "location": provider.location
+      });
+      if (res.data.containsKey("success")) {
+        if (res.data['success']) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }

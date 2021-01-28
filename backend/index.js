@@ -280,20 +280,25 @@ app.get("/get_bookTruck", async (req, res) => {
 });
 
 app.post('/edit_profile', async (req, res) => {
-    const { uid, name, email } = req.headers;
+    const { uid, name, email, company_name, location } = req.body;
     try {
         const editProfile = await User.updateOne({
 
             _id: uid
         }, {
-            name: name,
-            email: email
+            name,
+            email,
+            company_name,
+            location
+
         });
         res.send({
+            success: true,
             data: editProfile
         })
     } catch (e) {
         res.send({
+            success: false,
             error: e.message
         })
     }
