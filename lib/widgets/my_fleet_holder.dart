@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 
-class FleetHolder extends StatefulWidget {
+class MyFleetHolder extends StatefulWidget {
   final String from;
   final String to;
   final String postedAt;
   final String type;
   final String capacity;
   final String expectedRate;
+  final String id;
+  final bool isConfirmed;
 
-  const FleetHolder(
+  const MyFleetHolder(
       {Key key,
-      this.from,
-      this.to,
-      this.postedAt,
-      this.type,
-      this.capacity,
-      this.expectedRate})
+        this.from,
+        this.to,
+        this.postedAt,
+        this.type,
+        this.capacity,
+        this.expectedRate,
+        this.isConfirmed,
+        this.id})
       : super(key: key);
 
   @override
-  _FleetHolderState createState() => _FleetHolderState();
+  _MyFleetHolderState createState() => _MyFleetHolderState();
 }
 
-class _FleetHolderState extends State<FleetHolder> {
-  bool _isRateNegotiable = false;
-  bool _isImmediatelyAvailable = false;
+class _MyFleetHolderState extends State<MyFleetHolder> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,10 +46,10 @@ class _FleetHolderState extends State<FleetHolder> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-            Image.asset(
-            "assets/62894-package-icon.png",
-                height: 35,
-                width: 35,
+                Image.asset(
+                  "assets/62894-package-icon.png",
+                  height: 40,
+                  width: 40,
                 ),
                 SizedBox(
                   width: 10,
@@ -58,11 +60,11 @@ class _FleetHolderState extends State<FleetHolder> {
                     Text(
                       "${widget.from} - ${widget.to}",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14.0),
+                          fontWeight: FontWeight.bold, fontSize: 16.0),
                     ),
                     Text(
                       "${widget.postedAt}",
-                      style: TextStyle(color: Color(0xffC4C4C4), fontSize: 12.0),
+                      style: TextStyle(color: Color(0xffC4C4C4)),
                     ),
                   ],
                 )
@@ -79,6 +81,7 @@ class _FleetHolderState extends State<FleetHolder> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +108,7 @@ class _FleetHolderState extends State<FleetHolder> {
                     Row(
                       children: [
                         Icon(
-                          Icons.car_rental,
+                          Icons.local_shipping,
                           color: Theme.of(context).primaryColorLight,
                         ),
                         SizedBox(
@@ -127,7 +130,7 @@ class _FleetHolderState extends State<FleetHolder> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color:
-                              Theme.of(context).primaryColor.withOpacity(0.4)),
+                          Theme.of(context).primaryColor.withOpacity(0.4)),
                       child: Text(
                         "Expected Rate",
                       ),
@@ -146,16 +149,22 @@ class _FleetHolderState extends State<FleetHolder> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).accentColor,
-              onPressed: () {},
-              child: Text("Booking History"),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4)),
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).accentColor,
+                onPressed: () {},
+                child: widget.isConfirmed == null
+                    ? Text("Not yet confirmed")
+                    : Text(widget.isConfirmed
+                    ? "Load cancelled"
+                    : Text("Confirmed")),
+              ),
+            ],
           )
         ],
       ),

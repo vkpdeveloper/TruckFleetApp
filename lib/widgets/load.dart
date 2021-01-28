@@ -38,6 +38,7 @@ class _LoadHolderState extends State<LoadHolder> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: MediaQuery.of(context).size.width,
+      height: 172,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
@@ -53,8 +54,8 @@ class _LoadHolderState extends State<LoadHolder> {
               children: [
                 Image.asset(
                   "assets/62894-package-icon.png",
-                  height: 40,
-                  width: 40,
+                  height: 35,
+                  width: 35,
                 ),
                 SizedBox(
                   width: 10,
@@ -65,11 +66,11 @@ class _LoadHolderState extends State<LoadHolder> {
                     Text(
                       "${widget.from} - ${widget.to}",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                          fontWeight: FontWeight.bold, fontSize: 15.0),
                     ),
                     Text(
                       "${widget.postedAt}",
-                      style: TextStyle(color: Color(0xffC4C4C4)),
+                      style: TextStyle(color: Color(0xffC4C4C4), fontSize: 11.0),
                     ),
                   ],
                 )
@@ -95,6 +96,7 @@ class _LoadHolderState extends State<LoadHolder> {
                       children: [
                         Icon(
                           Icons.inventory,
+                          size: 18,
                           color: Theme.of(context).primaryColorLight,
                         ),
                         SizedBox(
@@ -103,7 +105,7 @@ class _LoadHolderState extends State<LoadHolder> {
                         Text(
                           "${widget.type}",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14.0),
+                              fontWeight: FontWeight.bold, fontSize: 13.0),
                         ),
                       ],
                     ),
@@ -114,6 +116,7 @@ class _LoadHolderState extends State<LoadHolder> {
                       children: [
                         Icon(
                           Icons.local_shipping,
+                          size: 18,
                           color: Theme.of(context).primaryColorLight,
                         ),
                         SizedBox(
@@ -122,7 +125,7 @@ class _LoadHolderState extends State<LoadHolder> {
                         Text(
                           "${widget.capacity}",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14.0),
+                              fontWeight: FontWeight.bold, fontSize: 13.0),
                         ),
                       ],
                     ),
@@ -138,6 +141,7 @@ class _LoadHolderState extends State<LoadHolder> {
                               Theme.of(context).primaryColor.withOpacity(0.4)),
                       child: Text(
                         "Expected Rate",
+                        style: TextStyle(fontSize: 13.0),
                       ),
                     ),
                     SizedBox(
@@ -146,7 +150,7 @@ class _LoadHolderState extends State<LoadHolder> {
                     Text(
                       widget.expectedRate,
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontSize: 13.0
                       ),
                     ),
                     MaterialButton(
@@ -154,6 +158,7 @@ class _LoadHolderState extends State<LoadHolder> {
                           borderRadius: BorderRadius.circular(4)),
                       color: Theme.of(context).primaryColor,
                       textColor: Theme.of(context).accentColor,
+                      height: 30,
                       onPressed: () => showBottomSheet(
                           backgroundColor: Colors.white,
                           context: context,

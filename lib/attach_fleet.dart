@@ -61,6 +61,7 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _pickUpLocation,
                       decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,6 +87,7 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _dropLocation,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,13 +113,13 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _truckNumber,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Icon(Icons.airport_shuttle_sharp),
                           filled: true,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6)),
                           fillColor: Colors.white,
                           hintText: "Enter Truck Number"),
-                      keyboardType: TextInputType.number,
                     ),
                     SizedBox(
                       height: 10,
@@ -125,12 +127,13 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _expectedRate,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Icon(Icons.account_balance_wallet),
                           filled: true,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6)),
                           fillColor: Colors.white,
-                          hintText: "Enter Fleet Expected Rate"),
+                          hintText: "Fleet Expected Rate(In Rs.)"),
                       keyboardType: TextInputType.number,
                     ),
                     SizedBox(
@@ -139,12 +142,13 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _capacityRate,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Icon(Icons.dashboard),
                           filled: true,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6)),
                           fillColor: Colors.white,
-                          hintText: "Enter Fleet Capacity(In Ton)"),
+                          hintText: "Fleet Capacity(In Ton)"),
                       keyboardType: TextInputType.number,
                     ),
                     SizedBox(
@@ -153,12 +157,13 @@ class _AttachFleetState extends State<AttachFleet> {
                     TextField(
                       controller: _fleetType,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(2),
                           prefixIcon: Icon(Icons.local_shipping),
                           filled: true,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6)),
                           fillColor: Colors.white,
-                          hintText: "Enter Fleet Type(E.g-Coal)"),
+                          hintText: "Fleet Type(E.g-LCV Open)"),
                     ),
                     SizedBox(
                       height: 10,

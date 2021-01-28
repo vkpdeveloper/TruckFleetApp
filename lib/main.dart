@@ -11,13 +11,14 @@ import 'package:flutter_learning_app/models/user.dart' as userModel;
 import 'package:flutter_learning_app/providers/login.dart';
 import 'package:flutter_learning_app/providers/user_provider.dart';
 import 'package:flutter_learning_app/splash_screen.dart';
-import 'package:flutter_learning_app/your_fleets.dart';
+import 'package:flutter_learning_app/my_fleets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'about_us.dart';
 import 'edit_profile.dart';
 import 'models/load.dart';
+import 'my_fleets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -169,8 +170,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               InkWell(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => YourFleets())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyFleets(loggedIn: true))),
                 child: Container(
                   height: 50,
                   alignment: Alignment.centerLeft,
@@ -267,7 +270,8 @@ class _HomePageState extends State<HomePage> {
             user.name,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         body: _allScreens[_currentPageIndex]);

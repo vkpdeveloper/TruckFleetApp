@@ -3,7 +3,14 @@ import 'package:flutter_learning_app/controllers/local_storage_controller.dart';
 import 'package:flutter_learning_app/models/booked_load.dart';
 import 'package:flutter_learning_app/models/load.dart';
 import 'package:flutter_learning_app/models/user.dart';
+import 'package:flutter_learning_app/models/your_fleet.dart';
 import 'package:flutter_learning_app/providers/login.dart';
+
+import '../your_fleets.dart';
+import '../your_fleets.dart';
+import '../your_fleets.dart';
+import '../your_fleets.dart';
+import '../your_fleets.dart';
 
 class HttpController {
   static String _hostUrl = "http://34.122.231.53:3000";
@@ -47,6 +54,7 @@ class HttpController {
     }
     return false;
   }
+
 
   static Future<bool> attachFleet(
       {pickUpLocation,
@@ -106,6 +114,25 @@ class HttpController {
           allLoads.add(load);
         }
         return allLoads;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static Future<List<MyFleet>> getFleetByUser() async {
+    try {
+      var endPoint = "/get_fleet_by_user";
+      Response response = await Dio().get("$_hostUrl$endPoint");
+      List<MyFleet> allFleet = List<MyFleet>();
+      if (response.data.containsKey("data")) {
+        for (var item in response.data['data']) {
+          MyFleet fleet = MyFleet.fromJson(item);
+          allFleet.add(fleet);
+        }
+        return allFleet;
       } else {
         return [];
       }

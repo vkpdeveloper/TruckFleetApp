@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'widgets/fleet.dart';
 
 class MyFleets extends StatefulWidget {
+  final bool loggedIn;
+  const MyFleets({Key key, this.loggedIn = false}) : super(key: key);
+
   @override
   _MyFleetsState createState() => _MyFleetsState();
 }
