@@ -312,4 +312,22 @@ app.get("/profile", async (req, res) => {
     })
 })
 
+app.post("/check_login", async (req, res) => {
+    const { mobile } = req.body;
+    const user = await User.findOne({ mobile });
+    if (user) {
+        res.send({
+            success: true,
+            result: {
+                response: user
+            }
+        })
+    } else {
+        res.send({
+            success: false,
+            result: "No user found"
+        })
+    }
+})
+
 app.listen(3000);
