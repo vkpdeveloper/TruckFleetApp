@@ -5,8 +5,9 @@ import 'package:flutter_learning_app/models/user.dart';
 class UserProvider extends ChangeNotifier {
   User user;
 
-  init() async {
+  Future<void> init() async {
     user = await HttpController.getUserProfile();
     notifyListeners();
+    return;
   }
 }

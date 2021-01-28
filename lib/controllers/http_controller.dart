@@ -6,7 +6,7 @@ import 'package:flutter_learning_app/models/user.dart';
 import 'package:flutter_learning_app/providers/login.dart';
 
 class HttpController {
-  static String _hostUrl = "http://10.0.2.2:3000";
+  static String _hostUrl = "http://34.122.231.53:3000";
 
   static Future<bool> postProfile(LoginProvider provider) async {
     String endPoint = "/register";
@@ -126,13 +126,14 @@ class HttpController {
       } else {
         return null;
       }
-    } catch (e) {
+    } on DioError catch (e) {
+      print(e.response.data);
       return null;
     }
   }
 
   static Future<User> checkUserProfile(String phoneNumber) async {
-    var endPoint = "/check_profile";
+    var endPoint = "/check_login";
     try {
       Response res =
           await Dio().post("$_hostUrl$endPoint", data: {"mobile": phoneNumber});
@@ -143,7 +144,8 @@ class HttpController {
       } else {
         return null;
       }
-    } catch (e) {
+    } on DioError catch (e) {
+      print(e.response.data);
       return null;
     }
   }
@@ -155,7 +157,8 @@ class HttpController {
         "name": provider.name,
         "email": provider.email,
         "company_name": provider.companyName,
-        "location": provider.location
+        "location": provider.location,
+        "uid": LocalStorageUtils().getAuthToken()
       });
       if (res.data.containsKey("success")) {
         if (res.data['success']) {

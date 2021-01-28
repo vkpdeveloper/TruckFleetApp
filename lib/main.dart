@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_learning_app/attach_fleet.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_learning_app/controllers/http_controller.dart';
 import 'package:flutter_learning_app/controllers/local_storage_controller.dart';
 import 'package:flutter_learning_app/home_layout.dart';
 import 'package:flutter_learning_app/login.dart';
-import 'package:flutter_learning_app/models/user.dart';
+import 'package:flutter_learning_app/models/user.dart' as userModel;
 import 'package:flutter_learning_app/providers/login.dart';
 import 'package:flutter_learning_app/providers/user_provider.dart';
 import 'package:flutter_learning_app/splash_screen.dart';
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    User user = userProvider.user;
+    userModel.User user = userProvider.user;
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Theme.of(context).primaryColor,
@@ -213,6 +214,7 @@ class _HomePageState extends State<HomePage> {
               InkWell(
                 onTap: () {
                   LocalStorageUtils().clearStorage();
+                  FirebaseAuth.instance.signOut();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),

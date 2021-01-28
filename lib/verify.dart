@@ -221,8 +221,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
                                     _isLoading = false;
                                   });
                                   if (user != null) {
-                                    Provider.of<UserProvider>(context).user =
-                                        user;
+                                    Provider.of<UserProvider>(context,
+                                            listen: false)
+                                        .user = user;
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(

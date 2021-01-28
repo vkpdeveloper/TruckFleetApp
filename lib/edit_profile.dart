@@ -24,12 +24,13 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _location = TextEditingController();
   bool _isLoading = false;
   UserProvider _userProvider;
+  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _phone.text = Provider.of<LoginProvider>(context, listen: false).phone;
-    _userProvider = Provider.of<UserProvider>(context);
+    _userProvider = Provider.of<UserProvider>(context, listen: false);
     User user = _userProvider.user;
     if (widget.loggedIn) {
       _name.text = user.name;
@@ -44,9 +45,10 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     LoginProvider provider = Provider.of<LoginProvider>(context);
     return Scaffold(
+      key: _key,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pop(context),
           color: Theme.of(context).primaryColor,
           icon: Icon(Icons.arrow_back),
         ),
@@ -136,6 +138,7 @@ class _EditProfileState extends State<EditProfile> {
                       elevation: 8.0,
                       borderRadius: BorderRadius.circular(12),
                       child: TextFormField(
+                        enabled: false,
                         controller: _phone,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.phone),
@@ -179,16 +182,16 @@ class _EditProfileState extends State<EditProfile> {
                                         await HttpController.editProfile(
                                             provider);
                                     if (isDone) {
-                                      Provider.of<UserProvider>(context,
+                                      await Provider.of<UserProvider>(context,
                                               listen: false)
                                           .init();
-                                      Scaffold.of(context)
+                                      _key.currentState
                                           .showSnackBar(new SnackBar(
                                         content: Text(
                                             "Profile updated successfully"),
                                       ));
                                     } else {
-                                      Scaffold.of(context)
+                                      _key.currentState
                                           .showSnackBar(new SnackBar(
                                         content:
                                             Text("Failed to update profile"),
@@ -198,6 +201,9 @@ class _EditProfileState extends State<EditProfile> {
                                     bool isDone =
                                         await HttpController.postProfile(
                                             provider);
+                                    await Provider.of<UserProvider>(context,
+                                            listen: false)
+                                        .init();
                                     if (isDone) {
                                       Navigator.push(
                                           context,
