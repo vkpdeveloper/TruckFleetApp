@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_learning_app/controllers/http_controller.dart';
+import 'package:flutter_learning_app/main.dart';
 import 'package:flutter_learning_app/providers/login.dart';
+import 'package:flutter_learning_app/providers/user_provider.dart';
 import 'package:flutter_learning_app/upload.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import './models/user.dart' as userModel;
 
 class VerifyScreen extends StatefulWidget {
   final String verificationId;
@@ -32,7 +36,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     generateOtp(widget.phoneNumber);
   }
 
-  Future<bool> generateOtp(String contact) async {
+  Future<void> generateOtp(String contact) async {
     // print(contact);
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       // print(verId);
@@ -56,7 +60,6 @@ class _VerifyScreenState extends State<VerifyScreen> {
     } on PlatformException catch (e) {
       print(e);
       handleError(e);
-      // Navigator.pop(context, (e as PlatformException).message);
     }
   }
 
@@ -197,30 +200,53 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MaterialButton(
-                      height: 40,
-                      minWidth: MediaQuery.of(context).size.width / 2,
-                      onPressed: () async {
-                        if (smsOTP.length == 6) {
-                          bool isDone = await verifyOtp();
-                          if (isDone) {
-                            Provider.of<LoginProvider>(context, listen: false)
-                                .phone = widget.phoneNumber;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UploadDocument()));
-                          }
-                        } else {
-                          showAlertDialog(context, "Wrong OTP");
-                        }
-                      },
-                      child: Text("Verify Now"),
-                      textColor: Theme.of(context).accentColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      color: Theme.of(context).primaryColor,
-                    )
+                    !_isLoading
+                        ? MaterialButton(
+                            height: 40,
+                            minWidth: MediaQuery.of(context).size.width / 2,
+                            onPressed: () async {
+                              if (smsOTP.length == 6) {
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                bool isDone = await verifyOtp();
+                                if (isDone) {
+                                  Provider.of<LoginProvider>(context,
+                                          listen: false)
+                                      .phone = widget.phoneNumber;
+                                  userModel.User user =
+                                      await HttpController.checkUserProfile(
+                                          widget.phoneNumber);
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  if (user != null) {
+                                    Provider.of<UserProvider>(context).user =
+                                        user;
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomePage()),
+                                        (route) => false);
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UploadDocument()));
+                                  }
+                                }
+                              } else {
+                                showAlertDialog(context, "Wrong OTP");
+                              }
+                            },
+                            child: Text("Verify Now"),
+                            textColor: Theme.of(context).accentColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            color: Theme.of(context).primaryColor,
+                          )
+                        : CircularProgressIndicator()
                   ],
                 )
               ],

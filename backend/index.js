@@ -318,7 +318,7 @@ app.post("/check_login", async (req, res) => {
     if (user) {
         res.send({
             success: true,
-            result: {
+            data: {
                 response: user
             }
         })

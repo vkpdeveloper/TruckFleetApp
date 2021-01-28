@@ -130,4 +130,21 @@ class HttpController {
       return null;
     }
   }
+
+  static Future<User> checkUserProfile(String phoneNumber) async {
+    var endPoint = "/check_profile";
+    try {
+      Response res =
+          await Dio().post("$_hostUrl$endPoint", data: {"mobile": phoneNumber});
+      if (res.data.containsKey("data")) {
+        User user = User.fromJson(res.data['data']['response']);
+        LocalStorageUtils().addUserAuthToken(user.sId);
+        return user;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }
