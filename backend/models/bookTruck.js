@@ -1,17 +1,23 @@
 const mongoose = require("mongoose");
 const User = require("./user")
+const Fleet = require("./fleet");
 
 const bookTruckSchema = new mongoose.Schema({
     bid_amount: {
         type: Number,
         required: true
     },
-    amount_type: {
+    rate_negotiable: {
         type: String,
         required: true
     },
-    negotiable: {
+    need_immediately: {
         type: String,
+        required: true
+    },
+    fid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Fleet,
         required: true
     },
     uid: {

@@ -7,8 +7,9 @@ const BookTruck = require("./models/bookTruck");
 const mongoose = require("mongoose");
 const load = require("./models/load");
 const fleet = require("./models/fleet");
-const multer = require("multer")
-const path = require("path")
+const Help = require("./models/help");
+const multer = require("multer");
+const path = require("path");
 
 const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -39,11 +40,12 @@ app.post("/register", upload.fields([{
     name: 'pan', maxCount: 1
 }]), async (req, res) => {
     try {
-        const { email, name, mobile, user_type, company_name, location } = req.body;
+        const { email, name, mobile, user_type, company_name, location, age } = req.body;
         const createUser = new User({
             email,
             name,
             mobile,
+            age,
             user_type,
             company_name,
             location
@@ -77,6 +79,26 @@ app.post("/add_fleet", async (req, res) => {
         res.send({
             success: true,
             result: "Fleet added successfully"
+        })
+    } catch (e) {
+        res.send({
+            error: e.message
+        })
+    }
+})
+
+app.post("/add_help", async (req, res) => {
+    try {
+        const { department, issue, uid } = req.body;
+        const addHelp = new Help({
+            department,
+            issue,
+            uid
+        });
+        const response = await addHelp.save();
+        res.send({
+            success: true,
+            result: "Help added successfully"
         })
     } catch (e) {
         res.send({
@@ -130,12 +152,13 @@ app.post("/otp_login", async (req, res) => {
 
 app.post("/book_truck", async (req, res) => {
     try {
-        const { bid_amount, amount_type, negotiable, uid, date } = req.body;
+        const { bid_amount, rate_negotiable, need_immediately, fid, uid, date } = req.body;
         const BookTruck = new BookTruck({
             bid_amount,
-            amount_type,
-            negotiable,
+            rate_negotiable,
+            need_immediately,
             uid,
+            fid,
             date
         });
         const response = await BookTruck.save();
@@ -252,7 +275,7 @@ app.get("/get_bookTruck", async (req, res) => {
     try {
         const allBookTruck = await BookTruck.find({
             uid: uid
-        });
+        }).populate("fid", "pickup_location drop_location fleet_capacity fleet_type date uid truck_number ");
         res.send({
             data: allBookTruck
         })
@@ -263,21 +286,6 @@ app.get("/get_bookTruck", async (req, res) => {
     }
 });
 
-app.get("/get_bookTruck", async (req, res) => {
-    const { uid } = req.headers;
-    try {
-        const allBookTruck = await BookTruck.find({
-            uid: uid
-        });
-        res.send({
-            data: allBookTruck
-        })
-    } catch (e) {
-        res.send({
-            error: e.message
-        })
-    }
-});
 
 app.post('/edit_profile', async (req, res) => {
     const { uid, name, email, company_name, location } = req.body;
@@ -289,6 +297,7 @@ app.post('/edit_profile', async (req, res) => {
             name,
             email,
             company_name,
+            age,
             location
 
         });

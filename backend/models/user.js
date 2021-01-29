@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
     user_type: {
         type: String,
     },
+    age: {
+        type: Number
+    },
     company_name: {
         type: String,
     },
