@@ -9,11 +9,13 @@ const bookTruckSchema = new mongoose.Schema({
     },
     rate_negotiable: {
         type: Boolean,
-        required: true
+        required: true,
+        default: null
     },
     need_immediately: {
         type: Boolean,
-        required: true
+        required: true,
+        default: null
     },
     fid: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +29,12 @@ const bookTruckSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        default: Date.now()
+
+    },
+    confirmed: {
+        type: Boolean,
+        default: null
     }
 });
 
