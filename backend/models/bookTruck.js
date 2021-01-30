@@ -32,7 +32,6 @@ const bookTruckSchema = new mongoose.Schema({
     },
     loadType: {
         type: String,
-        required: true
     },
     confirmed: {
         type: Boolean,
