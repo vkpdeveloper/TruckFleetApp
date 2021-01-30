@@ -8,11 +8,11 @@ const bookTruckSchema = new mongoose.Schema({
         required: true
     },
     rate_negotiable: {
-        type: String,
+        type: Boolean,
         required: true
     },
     need_immediately: {
-        type: String,
+        type: Boolean,
         required: true
     },
     fid: {
