@@ -152,12 +152,13 @@ app.post("/otp_login", async (req, res) => {
 
 app.post("/book_truck", async (req, res) => {
     try {
-        const { bid_amount, rate_negotiable, need_immediately, fid, uid } = req.body;
+        const { bid_amount, rate_negotiable, need_immediately, fid,load_type, uid } = req.body;
         const createBookTruck = new BookTruck({
             bid_amount,
             rate_negotiable,
             need_immediately,
             uid,
+            load_type,
             fid
         });
         const response = await createBookTruck.save();

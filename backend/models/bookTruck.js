@@ -30,6 +30,10 @@ const bookTruckSchema = new mongoose.Schema({
         default: Date.now()
 
     },
+    loadType: {
+        type: String,
+        required: true
+    },
     confirmed: {
         type: Boolean,
         default: null
