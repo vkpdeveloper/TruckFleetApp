@@ -153,7 +153,7 @@ app.post("/otp_login", async (req, res) => {
 app.post("/book_truck", async (req, res) => {
     try {
         const { bid_amount, rate_negotiable, need_immediately, fid, uid, date } = req.body;
-        const BookTruck = new BookTruck({
+        const createBookTruck = new BookTruck({
             bid_amount,
             rate_negotiable,
             need_immediately,
@@ -161,7 +161,7 @@ app.post("/book_truck", async (req, res) => {
             fid,
             date
         });
-        const response = await BookTruck.save();
+        const response = await createBookTruck.save();
         res.send({
             success: true,
             result: "Booked truck successfully"
@@ -288,7 +288,7 @@ app.get("/get_bookTruck", async (req, res) => {
 
 
 app.post('/edit_profile', async (req, res) => {
-    const { uid, name, email, company_name, location } = req.body;
+    const { uid, name, email, age, company_name, location } = req.body;
     try {
         const editProfile = await User.updateOne({
 
